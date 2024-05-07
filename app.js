@@ -8,6 +8,8 @@ import productRoutes from "./routes/product.routes.js";
 const app = express();
 const PORT = 8081;
 
+app.use(express.json());
+
 app.get("/", (req, res) => {
     res.status(200).json({
         message: "Welcome to public api - Tanjim"

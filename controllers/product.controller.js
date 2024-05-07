@@ -9,14 +9,18 @@ export const createProduct = async (req, res, next) => {
         return next(new ApiError(400, "all fileds are required"))
     }
 
-    const product = productModel.create({
-        title,
-        price,
-        description,
-        image
-    });
-
-    res.status(201).json(
-        new ApiResponse(200, product, "Product created Successfully")
-    )
+    try {
+        const product = await productModel.create({
+            title,
+            price,
+            description,
+            image
+        });
+        res.status(201).json(
+            new ApiResponse(200, product, "Product created Successfully")
+        )
+    } catch (error) {
+        console.log(error)
+        return next(new ApiError(501, "Failed to create product"))
+    }
 };

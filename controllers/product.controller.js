@@ -25,7 +25,7 @@ export const createProduct = async (req, res, next) => {
     }
 };
 
-export const getAllProducts = async (req, res) => {
+export const getAllProducts = async (req, res, next) => {
     try {
         const products = await productModel.find();
         if (!products) {
@@ -37,5 +37,33 @@ export const getAllProducts = async (req, res) => {
     } catch (error) {
         console.log(error)
         return next(new ApiError(501, "Failed to fetch products"))
+    }
+};
+
+export const updateProduct = async (req, res, next) => {
+    const { title, price, description, image } = req.body;
+    const { pid } = req.params;
+    if (!pid) {
+        return next(new ApiError(501, "Product not found"));
+    }
+    try {
+        const product = await productModel.findById(pid);
+        if (!product) {
+            return next(new ApiError(501, "Product not found"));
+        }
+
+        const updatedProduct = await productModel.findByIdAndUpdate(pid, {
+            title: title || product.title,
+            price: price || product.price,
+            description: description || product.description,
+            image: image || product.image
+        }, { new: true });
+
+        res.status(201).json(
+            new ApiResponse(201, updatedProduct, "Product updated successfully")
+        )
+    } catch (error) {
+        console.log(error)
+        return next(new ApiError(501, "Failed to update products"));
     }
 }

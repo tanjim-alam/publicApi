@@ -3,7 +3,7 @@ import { createProduct, deleteProduct, getAllProducts, updateProduct } from "../
 
 const productRoutes = Router();
 productRoutes.post("/", createProduct);
-productRoutes.get("/", getAllProducts);
+productRoutes.get("/get", getAllProducts);
 productRoutes.put("/:pid", updateProduct);
 productRoutes.delete("/:pid", deleteProduct);
 export default productRoutes;

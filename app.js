@@ -3,6 +3,7 @@ import express from "express";
 import dbConnection from "./config/dbConnection.js";
 import productRoutes from "./routes/product.routes.js";
 import cors from "cors";
+import morgan from "morgan";
 
 
 
@@ -17,6 +18,7 @@ const corsOption = {
 
 app.use(cors(corsOption))
 app.use(express.json());
+app.use(morgan("dev"))
 
 app.get("/", (req, res) => {
     res.status(200).json({

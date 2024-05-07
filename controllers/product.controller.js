@@ -65,5 +65,21 @@ export const updateProduct = async (req, res, next) => {
     } catch (error) {
         console.log(error)
         return next(new ApiError(501, "Failed to update products"));
+    };
+};
+
+export const deleteProduct = async (req, res, next) => {
+    const { pid } = req.params;
+    if (!pid) {
+        return next(new ApiError(204, "Please provide correct product id"))
+    }
+    try {
+        await productModel.findByIdAndDelete(pid);
+        res.status(201).json(
+            new ApiResponse(200, "Product deleted successfully")
+        )
+    } catch (error) {
+        console.log(error)
+        return next(new ApiError(501, "Failed to delete product"));
     }
 }

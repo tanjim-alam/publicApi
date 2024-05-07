@@ -24,3 +24,18 @@ export const createProduct = async (req, res, next) => {
         return next(new ApiError(501, "Failed to create product"))
     }
 };
+
+export const getAllProducts = async (req, res) => {
+    try {
+        const products = await productModel.find();
+        if (!products) {
+            return next(new ApiError(501, "Something went wrong"))
+        }
+        res.status(201).json(
+            new ApiResponse(200, products, "Products data fetched successfully")
+        )
+    } catch (error) {
+        console.log(error)
+        return next(new ApiError(501, "Failed to fetch products"))
+    }
+}

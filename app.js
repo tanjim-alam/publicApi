@@ -4,6 +4,7 @@ import dbConnection from "./config/dbConnection.js";
 import productRoutes from "./routes/product.routes.js";
 import cors from "cors";
 import morgan from "morgan";
+import productModel from "./models/product.model.js";
 
 
 
@@ -24,6 +25,17 @@ app.get("/", (req, res) => {
     res.status(200).json({
         message: "Welcome to public api - Tanjim"
     })
+})
+
+app.get("/getall", async (req, res) => {
+    try {
+        const products = await productModel.find();
+        res.status(200).json({
+            data: products
+        })
+    } catch (error) {
+        console.log(error)
+    }
 })
 app.use("/api/v1/product", productRoutes);
 

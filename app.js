@@ -25,10 +25,10 @@ app.get("/", (req, res) => {
         message: "Welcome to public api - Tanjim"
     })
 })
-app.use("/api/v1/product", productRoutes)
+app.use("/api/v1/product", productRoutes);
+
+dbConnection();
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-dbConnection();
